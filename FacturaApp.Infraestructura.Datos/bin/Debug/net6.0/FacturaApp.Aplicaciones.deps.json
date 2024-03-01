@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "FacturaApp.Aplicaciones/1.0.0": {
+        "dependencies": {
+          "FacturaApp.Dominio": "1.0.0"
+        },
+        "runtime": {
+          "FacturaApp.Aplicaciones.dll": {}
+        }
+      },
+      "FacturaApp.Dominio/1.0.0": {
+        "runtime": {
+          "FacturaApp.Dominio.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "FacturaApp.Aplicaciones/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "FacturaApp.Dominio/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

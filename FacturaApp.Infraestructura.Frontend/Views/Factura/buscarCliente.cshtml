@@ -1,0 +1,115 @@
+﻿@model FacturaApp.Dominio.Cliente
+
+@{
+    ViewData["Title"] = "buscarCliente";
+    
+}
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body>
+    
+    <input type="hidden" id="hasClientData" value="@(Model != null ? "true" : "false")">
+
+    <h1 class="text-center py-2">Buscar cliente</h1>
+
+     <div class="col-sm-4 offset-sm-4 ">
+        <form asp-controller="Factura" asp-action="BuscarCliente" method="post">
+            <div class="input-group rounded">
+                <div class="mb-3">
+                    <label for="exampleInputIdentificacion" class="form-label">Identificacion</label>
+                    <input type="text" class="form-control" asp-for="Identificacion">
+                </div>
+            </div>
+            <div class="mb-3">
+                <button type="submit" class="btn btn-primary" id="buscar">Buscar</button>
+            </div>
+        </form>
+    </div>
+
+
+    @if (Model != null)
+    {
+        if(Model.IdCliente == 0)
+        {
+            <div class="mb-3 mt-lg-1">
+                <p class="alert alert-danger" id="alerta1">Cliente no encontrado.1</p>
+            </div>
+
+        }
+        else
+        {
+            <div class="mb-3 mt-lg-1">
+                <h2 id="titulo">Cliente Encontrado:</h2>
+                <table class="table" id="clienteEncontrado">
+                    <tr>
+                        <th>Identificacion:</th>
+                        <td>@Model.Identificacion</td>
+                    </tr>
+                    <tr>
+                        <th>Nombre:</th>
+                        <td>@Model.Nombre</td>
+                    </tr>
+                    <tr>
+                        <th>Direccion:</th>
+                        <td>@Model.Direccion</td>
+                    </tr>
+                    <tr>
+                        <th>Telefono:</th>
+                        <td>@Model.Telefono</td>
+                    </tr>
+                    <tr>
+                        <th>Correo:</th>
+                        <td>@Model.Correo</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="mb-3">
+                <button type="button" id="clearButton">Limpiar</button>
+            </div>
+        }
+    }
+    else
+    {
+        <div class ="mb-3 mt-lg-1">
+            <p class="alert alert-danger" id="alerta2">Cliente no encontrado.2</p>
+        </div>
+
+    }
+
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+
+            const hasClientData = $("#hasClientData").val() === "true"; //false inicialmente
+            if (!hasClientData ) {
+                $("#clearButton").hide();
+                $("#alerta2").hide();
+            }
+            
+            $("#clearButton").click(function () {
+                $("#hasClientData").val("false");
+                $("#clienteEncontrado").empty();
+                $("#alerta1").hide(); 
+                $("#alerta2").hide();
+                $("#titulo").empty();
+                $(this).hide();
+            });
+        });
+    </script>
+
+
+
+</body>
+</html>
+
+

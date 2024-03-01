@@ -1,0 +1,233 @@
+﻿@model FacturaApp.Dominio.Factura
+
+@{
+    ViewData["Title"] = "CrearOrden";
+    //var idProductoActual = "";
+    
+    //FacturaApp.Dominio.Producto productoSeleccionadoModel;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body>
+
+    <div class="row mt-2">
+        <h1 class="text-center py-1">FacturApp</h1>
+        <div class="col-sm-4 offset-sm-4">
+            <form asp-controller="Factura" asp-action="CrearOrden" method="post">
+
+                <div class="mb-2">
+                    <label for="exampleInputtext" class="form-label">Establecimiento</label>
+                    <input type="text" class="form-control" asp-for="Establecimiento" value="ELECTRONIC-ART">
+                </div>
+
+                <div class="mb-2">
+                    <label for="puntoEmision" class="form-label">Punto de Emisión:</label>
+                    <select class="form-control custom-select" id="puntoEmision" asp-for="PuntoEmision">
+                        <option value="001-1">001 - 1</option>
+                        <option value="001-2">001 - 2</option>
+                    </select>
+                </div>
+
+                <div class="mb-2">
+                    <label for="exampleInputtext" class="form-label">NumeroFactura</label>
+                    <input type="text" class="form-control" asp-for="NumeroFactura">
+                </div>
+
+                <div class="mb-2">
+                    <label for="exampleInputtext" class="form-label">Fecha</label>
+                    <input type="date" class="form-control" asp-for="Fecha" max="@DateTime.Today.ToString("yyyy-MM-dd")">
+                </div>
+
+               @* <div class="mb-2">
+                    <select asp-for="@Model.detalles" class="form-control producto-select">
+                    <option value="">Seleccionar detalle</option>
+                    @foreach (var producto in ViewBag.Productos)
+                    {
+                        <option value="@producto.IdProducto">@producto.Descripcion</option>
+                    }
+                </select>
+                </div>*@
+                <button type="submit" class="btn btn-primary">Agregar cabecera</button>
+            </form>
+        </div>
+
+
+
+        <div class="col-sm-4 offset-sm-4">
+            <table class="table">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Codigo</th>
+                    <th>Descripcion</th>
+                    <th>Categoria</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                       
+                
+                    <td>
+                        <select class="form-control producto-select">
+                        @foreach (var producto in ViewBag.Productos)
+                        {
+                            <option value="@producto.Codigo">@producto.Descripcion</option>
+                            @*idProductoActual = @producto.Codigo;*@
+                            
+                        }
+                        </select>  
+                    </td>
+
+                   @* @foreach (var producto in ViewBag.Productos)
+                    {
+                            if (producto.Codigo == idProductoActual)
+                            {
+                                <td>
+                                    <input type="text" class="form-control codigo-producto" value="@producto.Codigo" disabled />
+                                </td>
+
+                                <td>
+                                    <input type="text" class="form-control descripcion-producto" value="@producto.Descripcion" disabled />
+                                </td>
+
+                                <td>
+                                    <input type="text" class="form-control categoria-producto" value="@producto.Categoria" disabled />
+                                </td>
+                            }
+                     }*@
+
+
+                       
+                     <td>
+                            <input type="text" class="form-control codigo-producto" id="codigo-producto" value="" disabled />   @*value=""*@
+                     </td>
+
+                     <td>
+                            <input type="text" class="form-control descripcion-producto" id="descripcion-producto" value="" disabled />
+                     </td>
+
+                     <td>
+                            <input type="text" class="form-control categoria-producto" id="categoria-producto" value="" disabled />
+                     </td>
+                     
+                </tr>
+            </tbody>
+            </table>
+
+            <div class="mb-3">
+                <button type="button" id="addProductButton">Add Product</button>
+            </div>
+
+        </div>
+
+
+
+
+
+        <div class="col-sm-4 offset-sm-4">
+            <div class="mb-2">
+                <label for="exampleInputtext" class="form-label">Subtotal</label>
+                <input type="number" class="form-control" asp-for="Subtotal">
+            </div>
+
+            <div class="mb-2">
+                <label for="exampleInputtext" class="form-label">TotalIVA</label>
+                <input type="number" class="form-control" asp-for="TotalIVA">
+            </div>
+
+            <div class="mb-2">
+                <label for="exampleInputtext" class="form-label">Total</label>
+                <input type="number" class="form-control" asp-for="Total">
+            </div>
+         </div>
+        
+
+
+    </div>
+
+
+   @* <div class="form-group">
+        <label>Detalles de la Factura:</label>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad</th>
+                    <th>Unidad de Medida</th>
+                    <th>Precio Unitario</th>
+                    <th>IVA</th>
+                    <th>Subtotal</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody id="detalleBody">
+
+                <tr>
+                    <td></td>
+                </tr>
+
+
+                <div class="mb-2">
+                    <select asp-for="@Model.detalles" class="form-control producto-select">
+                        <option value="">Seleccionar producto</option>
+                        @foreach (var producto in ViewBag.Productos)
+                        {
+                            <option value="@producto.IdProducto">@producto.Descripcion</option>
+                        }
+                    </select>
+                </div>
+
+            </tbody>
+        </table>
+    </div>*@
+
+
+    <!-- MODAL PRODUCTOS -->
+    <div class="modal fade" id="modalProducto" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title">Productos</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table id="tbProducto" class="table table-striped table-bordered nowrap compact" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Codigo</th>
+                                    <th>Nombre</th>
+                                    <th>Descripcion</th>
+                                    <th>Stock</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/ListarProducto.js"></script>
+ 
+
+
+</body>
+</html>
+
+      

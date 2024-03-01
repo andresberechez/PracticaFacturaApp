@@ -1,0 +1,167 @@
+﻿@model FacturaApp.Dominio.Detalles
+
+@{
+    ViewData["Title"] = "Detalle";
+}
+
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+</head>
+<body>
+
+<div class="card-body p-2">
+<div class="row align-items-end">
+<form asp-controller="Factura" asp-action="Detalle" method="post" id="formulario">
+    <table>
+        <thead>
+            <tr>
+                <td>Producto</td>
+                <td>Cantidad</td>
+                <td>Unidad Medida</td>
+                <td>Precio</td>
+                @*<td>IVA</td>*@
+                @*<td>Subtotal</td>*@
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                <select class="form-control form-control-sm model producto-select" id="Codigo">
+                @foreach (var producto in ViewBag.Productos)
+                {
+                    <option value="@producto.Codigo">@producto.Descripcion</option>
+                }
+                </select>
+                </td>
+                <td>
+                            @*<label for="Cantidad" class="col-form-label col-form-label-sm">Cantidad:</label>*@
+                            <input type="text" class="form-control form-control-sm model" id="Cantidad" name="Cantidad">
+                </td>
+                <td>
+                            @*<label for="UnidadMedida" class="col-form-label col-form-label-sm">Unidad medida:</label>*@
+                            <input type="text" class="form-control form-control-sm model" id="UnidadMedida" name="UnidadMedida">
+                </td>
+                <td>
+                            @*<label for="Precio" class="col-form-label col-form-label-sm">Precio:</label>*@
+                            <input type="text" class="form-control form-control-sm model" id="Precio" name="Precio">
+                </td>
+               
+            </tr>
+
+        </tbody>
+        <div class="col-sm-2 mt-4">
+            <div class="form-group mb-0">
+                <button id="btnAgregar" type="submit" class="btn btn-sm btn-success btn-block">Agregar</button>
+            </div>
+        </div>
+
+    </table>
+        
+</form>
+
+<div class="card-body p-2 mt-8">
+<h6 class="card-title mb-1 text-info">Productos agregados</h6>
+    <div class="row align-items-end">
+        <div id="lista-resultados"></div>
+    </div>
+</div>
+
+
+</div>
+</div>
+
+
+
+    <script>
+
+            const formulario = document.querySelector('#formulario');
+
+            const listaResultados = document.querySelector('#lista-resultados');
+
+
+            formulario.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                const Codigo = document.querySelector('#Codigo').value;
+                const Cantidad = document.querySelector('#Cantidad').value;
+                const UnidadMedida = document.querySelector('#UnidadMedida').value;
+                const Precio = document.querySelector('#Precio').value;
+
+                const listaDatos = [
+                    {
+                        "Codigo": Codigo,
+                        "Cantidad": Cantidad,
+                        "UnidadMedida": UnidadMedida,
+                        "Precio": Precio,
+                    }
+                ];
+
+                const htmlLista = listaDatos.map(item => `
+                
+
+                <div class="row">
+
+                    <div class="col-sm-4">
+                        <div class="form-group mb-0">
+                            <input type="text" class="form-control form-control-sm model" readonly id="Descripcion" name="Codigo" value="${item.Codigo}">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group mb-0">
+                            <input type="text" class="form-control form-control-sm model" readonly id="Cantidad" name="Cantidad" value="${item.Cantidad}">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group mb-0">
+                            <input type="text" class="form-control form-control-sm model" readonly id="UnidadMedida" name="UnidadMedida" value="${item.UnidadMedida}">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group mb-0">
+                            <input type="text" class="form-control form-control-sm model" readonly id="Precio" name="Precio" value="${item.Precio}">
+                        </div>
+                    </div>
+
+                </div>
+
+                  `).join('');
+
+
+                const htmlListaDetallesProductos = listaDatos.map(item => `
+                <tr>
+                    <td></td>
+                    <td>${item.Codigo}</td>
+                     <td>${item.Cantidad}</td>
+                    <td> 11111111 </td>
+                    <td> 3 </td>
+                    <td> 0.45 </td>
+                    <td> 3.45 </td>
+                </tr>
+                    `).join('');
+
+
+                listaDatos.map(item => console.log(item));
+                listaDatos.map(item => console.log(item.Codigo));
+                listaDatos.map(item => console.log(item.Cantidad));
+                listaDatos.map(item => console.log(item.UnidadMedida));
+                listaDatos.map(item => console.log(item.Precio));
+
+                listaResultados.innerHTML = htmlLista;
+
+
+            });
+    </script>
+
+
+
+
+
+</body>
+</html>
